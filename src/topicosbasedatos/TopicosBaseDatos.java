@@ -57,37 +57,6 @@ public class TopicosBaseDatos {
                 
                 case 1:
                     
-                    
-                    String SQL = "SELECT * FROM ALUMNOS";
-            
-                    instruccion = conexion.createStatement();
-
-                    conjuntoResultados  = instruccion.executeQuery(SQL);
-
-                    System.out.println("Tabla de Alumnos:\n");
-
-                    ResultSetMetaData metaDatos = conjuntoResultados.getMetaData();
-
-                    int numeroDeColumnas = metaDatos.getColumnCount();
-
-
-                    for (int i = 1; i < numeroDeColumnas; i++) 
-
-                        System.out.printf( "%-8s\t", metaDatos.getColumnName(i));
-
-                    System.out.println();
-
-                    while (conjuntoResultados.next()) {
-
-                        for (int j = 1; j < numeroDeColumnas; j++) 
-
-                            System.out.printf( "%-8s\t", conjuntoResultados.getObject(j));
-
-                        System.out.println("");
-
-
-                    }
-                    
                     break;
                     
                     /*--------------------------------------------------------------------------------------------------------------------*/
@@ -110,6 +79,7 @@ public class TopicosBaseDatos {
                 
 
                 String contraseniaCONFIRMACION ="";
+                String rolUsuario ="";
 
                 String VERIFICACION = "SELECT * FROM usuarios WHERE username = ?";
 
@@ -125,6 +95,7 @@ public class TopicosBaseDatos {
                     //System.out.println(rs.getString(1));
                     System.out.println(">>>> contrase;a del Servidor >>>>>   "+rs.getString("password"));
                     contraseniaCONFIRMACION = rs.getString("password");
+                    rolUsuario = rs.getString("role");
                     //System.out.println(rs.getString("NOMBRE")+ " :  " + rs.getString("PROMEDIO"));
 
                 }
@@ -168,6 +139,7 @@ public class TopicosBaseDatos {
                 
                     switch (elecion) {
                         case "1":
+                            
                             conexion.setAutoCommit(true);
                             System.out.print("ingresar Expediente :  ");
                             String uno =entradaDATO.nextLine();
@@ -190,45 +162,265 @@ public class TopicosBaseDatos {
                             
                             
                             System.out.println("\n"+"\n"+ "\n"+"la transaccion fue :::>>>   " + conexion.getAutoCommit() + "\n");
-                            String ENTER;
-                            Scanner teclado = new Scanner(System.in);
-                            System.out.println("Presione ENTER para continuar ...."+"\n"+ "\n");
-                            try
-                            {
-                                ENTER = teclado.nextLine();
-                            }
-                            catch(Exception e)
-                            {}
                             
+                            confirmar();
                             
 
                         break;
                             
                         case "2":
                             
+                            
+                            
+                            String SQL = "SELECT * FROM promedios";
+            
+                            instruccion = conexion.createStatement();
+
+                            conjuntoResultados  = instruccion.executeQuery(SQL);
+
+                            System.out.println("Tabla de Promedios:\n");
+
+                            ResultSetMetaData metaDatos = conjuntoResultados.getMetaData();
+
+                            int numeroDeColumnas = metaDatos.getColumnCount();
+
+                            
+                            for (int i = 1; i <= numeroDeColumnas; i++) {
+
+                                System.out.printf( "%-8s\t", metaDatos.getColumnName(i));
+                            
+                            
+
+                            System.out.println();
+
+                            while (conjuntoResultados.next()) {
+
+                                for (int j = 1; j <= numeroDeColumnas; j++) {
+
+                                    System.out.printf( "%-8s\t", conjuntoResultados.getObject(j));
+                                }
+                                        
+                                System.out.println("");
+
+
+                            }
+                            }
+                            
+                            confirmar();
+                            
                             break;
                         case "3":
+                            
+                            System.out.print("ingresar Nombre :  ");
+                            uno =entradaDATO.nextLine();
+                            
+                            query = "{CALL AgregarMaestro(?) }";
+                    
+                            stmts = conexion.prepareCall(query);
+
+                            stmts.setString(1, uno);
+                            stmts.execute();
+                            
+                            System.out.println("\n"+"\n"+ "\n"+"la transaccion fue :::>>>   " + conexion.getAutoCommit() + "\n");
+                            
+                            confirmar();
                             
                             break;
                         case "4":
                             
+                            SQL = "SELECT * FROM maestros";
+            
+                            instruccion = conexion.createStatement();
+
+                            conjuntoResultados  = instruccion.executeQuery(SQL);
+
+                            System.out.println("Tabla de Maestros:\n");
+
+                            metaDatos = conjuntoResultados.getMetaData();
+
+                            numeroDeColumnas = metaDatos.getColumnCount();
+
+                            
+                            for (int i = 1; i <= numeroDeColumnas; i++) {
+
+                                System.out.printf( "%-8s\t", metaDatos.getColumnName(i));
+                            
+                            
+
+                            System.out.println();
+
+                            while (conjuntoResultados.next()) {
+
+                                for (int j = 1; j <= numeroDeColumnas; j++) {
+
+                                    System.out.printf( "%-8s\t", conjuntoResultados.getObject(j));
+                                }
+                                        
+                                System.out.println("");
+
+
+                            }
+                            }
+                            
+                            confirmar();
+                            
                             break;
                         case "5":
+                            
+                            System.out.print("ingresar Clase DDDD :  ");
+                            uno = entradaDATO.nextLine();
+                            System.out.print("ingresar Creditos de la Materia :  ");
+                            dos = entradaDATO.nextLine();
+                            System.out.print("ingresar Nombre de la Materia :  ");
+                            tres = entradaDATO.nextLine();
+                            
+                            query = "{CALL AgregarMateria(?,?,?) }";
+                    
+                            stmts = conexion.prepareCall(query);
+
+                            stmts.setInt(1, Integer.parseInt(uno));
+                            stmts.setInt(2, Integer.parseInt(dos));
+                            stmts.setString(3, tres);
+                            stmts.execute();
+                            
+                            
+                            System.out.println("\n"+"\n"+ "\n"+"la transaccion fue :::>>>   " + conexion.getAutoCommit() + "\n");
+                            
+                            confirmar();
                             
                             break;
                         case "6":
                             
+                            SQL = "SELECT * FROM clases";
+            
+                            instruccion = conexion.createStatement();
+
+                            conjuntoResultados  = instruccion.executeQuery(SQL);
+
+                            System.out.println("Tabla de CLASES:\n");
+
+                            metaDatos = conjuntoResultados.getMetaData();
+
+                            numeroDeColumnas = metaDatos.getColumnCount();
+
+                            
+                            for (int i = 1; i <= numeroDeColumnas; i++) {
+
+                                System.out.printf( "%-8s\t", metaDatos.getColumnName(i));
+                            
+                            
+
+                            System.out.println();
+
+                            while (conjuntoResultados.next()) {
+
+                                for (int j = 1; j <= numeroDeColumnas; j++) {
+
+                                    System.out.printf( "%-8s\t", conjuntoResultados.getObject(j));
+                                }
+                                        
+                                System.out.println("");
+
+
+                            }
+                            }
+                            
+                            confirmar();
+                            
                             break;
                         case "7":
+                            
+                            System.out.print("ingresar Expediente :  ");
+                            uno = entradaDATO.nextLine();
+                            System.out.print("ingresar Clase ID (DDDD) :  ");
+                            dos = entradaDATO.nextLine();
+                            System.out.print("ingresar Calidicacion Final :  ");
+                            tres = entradaDATO.nextLine();
+                            
+                            query = "{CALL AgregarCalificacion(?,?,?) }";
+                    
+                            stmts = conexion.prepareCall(query);
+
+                            stmts.setInt(1, Integer.parseInt(uno));
+                            stmts.setInt(2, Integer.parseInt(dos));
+                            stmts.setDouble(3, Double.valueOf(tres));
+                            stmts.execute();
+                            
+                            
+                            System.out.println("\n"+"\n"+ "\n"+"la transaccion fue :::>>>   " + conexion.getAutoCommit() + "\n");
+                            
+                            confirmar();
                             
                             break;
                         case "8":
                             
+                            SQL = "SELECT * FROM bitacora";
+            
+                            instruccion = conexion.createStatement();
+
+                            conjuntoResultados  = instruccion.executeQuery(SQL);
+
+                            System.out.println("Tabla de BITACORA:\n");
+
+                            metaDatos = conjuntoResultados.getMetaData();
+
+                            numeroDeColumnas = metaDatos.getColumnCount();
+
+                            
+                            for (int i = 1; i <= numeroDeColumnas; i++) {
+
+                                System.out.printf( "%-8s\t", metaDatos.getColumnName(i));
+                            
+                            
+
+                            System.out.println();
+
+                            while (conjuntoResultados.next()) {
+
+                                for (int j = 1; j <= numeroDeColumnas; j++) {
+
+                                    System.out.printf( "%-8s\t", conjuntoResultados.getObject(j));
+                                }
+                                        
+                                System.out.println("");
+
+
+                            }
+                            }
+                            
+                            confirmar();
+                            
+                            
                             break;
                         case "9":
                             
-                            break;
-                        case "10":
+                            System.out.print("ingresar Email :  ");
+                            uno = entradaDATO.nextLine();
+                            System.out.print("ingresar Contrase;a :  ");
+                            dos = entradaDATO.nextLine();
+                            try {
+                                dos = hexString(getSHA(dos));
+                            } catch (Exception e) {
+                            }
+                            System.out.print("ingresar rol (administrador/usuario)  ");
+                            tres = entradaDATO.nextLine();
+                            System.out.print("ingresar UserName  ");
+                            cuatro = entradaDATO.nextLine();
+                            
+                            query = "{CALL AgregarUsuario(?,?,?,?) }";
+                    
+                            stmts = conexion.prepareCall(query);
+
+                            stmts.setString(1, uno);
+                            stmts.setString(2, dos);
+                            stmts.setString(3, tres);
+                            stmts.setString(4, cuatro);
+                            stmts.execute();
+                            
+                            
+                            System.out.println("\n"+"\n"+ "\n"+"la transaccion fue :::>>>   " + conexion.getAutoCommit() + "\n");
+                            
+                            confirmar();
                             
                             break;
                         case "0":
@@ -299,6 +491,21 @@ public class TopicosBaseDatos {
         }
     
         return hexString.toString();
+    }
+    
+    public static void confirmar(){
+    
+        String ENTER;
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("\n"+ "\n"+"Presione ENTER para continuar ...."+"\n"+ "\n");
+        try
+        {
+            ENTER = teclado.nextLine();
+        }
+        catch(Exception e)
+        {}
+                            
+    
     }
     
 }
