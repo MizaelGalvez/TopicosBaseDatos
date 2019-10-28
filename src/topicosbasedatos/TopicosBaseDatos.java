@@ -93,7 +93,7 @@ public class TopicosBaseDatos {
                 while(rs.next()){
 
                     //System.out.println(rs.getString(1));
-                    System.out.println(">>>> contrase;a del Servidor >>>>>   "+rs.getString("password"));
+                    //System.out.println(">>>> contrase;a del Servidor >>>>>   "+rs.getString("password"));
                     contraseniaCONFIRMACION = rs.getString("password");
                     rolUsuario = rs.getString("role");
                     //System.out.println(rs.getString("NOMBRE")+ " :  " + rs.getString("PROMEDIO"));
@@ -104,7 +104,7 @@ public class TopicosBaseDatos {
                 if (contraseniaCONFIRMACION.equals(contrasena)) {
 
 
-                    System.out.println("VALIDADO, CONTRASE:A CORRECTA");
+                    //System.out.println("VALIDADO, CONTRASE:A CORRECTA");
                     Verificado = true;
 
                 }else{
@@ -126,7 +126,7 @@ public class TopicosBaseDatos {
                     
                     switch(rolUsuario){
                     
-                        case "administrador":
+                        case "usuario":
                             
                             
                             System.out.println("hola " + usuario  + " eres "+ rolUsuario  + "\n" +
@@ -281,7 +281,7 @@ public class TopicosBaseDatos {
                             break;
                         
                             
-                        case "usuario":
+                        case "administrador":
                             
                                 System.out.println("hola " + usuario  + " eres "+ rolUsuario  + "\n" +
 
@@ -604,7 +604,9 @@ public class TopicosBaseDatos {
                             
                             
                         default:
-                            throw new AssertionError();
+                            System.out.println("\n  \n  Error en los Permisos de Usuario \n  \n CONTACTE AL ADMINISTRADOR DEL SOFTWARE \n \n");
+                            Verificado = false;
+                            break;
                     }
                     
                     //------------------------------------------------------------------------------------------------------------------------------------
